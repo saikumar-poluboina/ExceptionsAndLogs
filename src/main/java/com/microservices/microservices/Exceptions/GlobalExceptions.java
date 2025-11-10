@@ -17,6 +17,8 @@ public class GlobalExceptions {
     // Validation errors from @Valid
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ErrorResponse> handleValidationException(MethodArgumentNotValidException ex) {
+        System.out.println(">>> Validation triggered for fields: " + ex.getBindingResult().getFieldErrors());
+
         Map<String, String> fieldErrors = new HashMap<>();
         ex.getBindingResult().getFieldErrors().forEach(error ->
                 fieldErrors.put(error.getField(), error.getDefaultMessage())
@@ -33,7 +35,8 @@ public class GlobalExceptions {
     }
 
     // Illegal arguments, null pointers, etc.
-    @ExceptionHandler({IllegalArgumentException.class, NullPointerException.class})
+//    @ExceptionHandler({IllegalArgumentException.class, NullPointerException.class})
+    @ExceptionHandler(RuntimeException.class)
     public ResponseEntity<ErrorResponse> handleCommonRuntimeExceptions(Exception ex) {
         Map<String, String> error = Map.of("error", ex.getMessage());
 
@@ -64,6 +67,7 @@ public class GlobalExceptions {
 
     @ExceptionHandler(ResourceNotFoundException.class)
     public ResponseEntity<ErrorResponse> handleResourceNotFound(ResourceNotFoundException ex) {
+
         ErrorResponse response = new ErrorResponse(
                 LocalDateTime.now(),
                 HttpStatus.NOT_FOUND.value(),

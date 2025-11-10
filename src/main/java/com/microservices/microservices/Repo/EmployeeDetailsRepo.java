@@ -14,4 +14,6 @@ public interface EmployeeDetailsRepo extends JpaRepository<Employee,Integer> {
     Optional<Employee> findByEmail(String email);
     Optional<Employee> findByAge(int age);
     Optional<Employee> findByName(String Name);
+
+    Optional<Employee> findByEmailAndPassword(String email, String password);
 }

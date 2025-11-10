@@ -24,12 +24,15 @@ public class Employee {
     @NotBlank(message = "Email cannot be empty")
     private String email;
 
+//    @NotNull(message = "Password cannot be empty")
+    private String password;
     @NotNull(message = "Age cannot be null")
     @Min(value = 18, message = "Age must be at least 18")
     @Max(value = 65, message = "Age must be less than or equal to 65")
     private Integer age;
     @NotNull(message = "Gender must be specified")
     private Character gender;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
